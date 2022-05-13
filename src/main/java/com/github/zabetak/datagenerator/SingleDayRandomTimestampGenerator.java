@@ -17,32 +17,34 @@
 package com.github.zabetak.datagenerator;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Random;
 
 /**
  * Generates random timestamps spanning a single day.
  *
- * Each timestamp is of type long and corresponds to milliseconds since epoch.
+ * Each timestamp corresponds to the string representation of a
+ * {@link LocalDateTime} object with seconds precision.
  */
 public final class SingleDayRandomTimestampGenerator
-    implements ColumnGenerator<Long> {
-
-  private static final int DAY_MILLISECONDS = 86400000;
+    implements ColumnGenerator<String> {
+  private static final DateTimeFormatter FORMATTER =
+      DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+  private static final int DAY_SECONDS = 86400;
   private final Random rand = new Random();
-  private final ZonedDateTime midnightToday =
-      ZonedDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT, ZoneId.of("UTC"));
+  private final LocalDateTime midnightToday =
+      LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
 
   public SingleDayRandomTimestampGenerator() {
   }
 
   @Override
-  public Long generate() {
-    int randMilli = rand.nextInt(DAY_MILLISECONDS);
-    return midnightToday.plus(randMilli, ChronoUnit.MILLIS).toInstant()
-        .toEpochMilli();
+  public String generate() {
+    int randSeconds = rand.nextInt(DAY_SECONDS);
+    return midnightToday.plus(randSeconds, ChronoUnit.SECONDS)
+        .format(FORMATTER);
   }
 }
