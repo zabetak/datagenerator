@@ -1,24 +1,28 @@
 ## Build project
-
-mvn clean install -Dcheckstyle.skip
+```
+mvn clean install
+```
 ## Run project
 
-### Sample input
+The directory `samples` contains various input files that can be used to
+generate data.
 
-A column datatype pair on each line separated by spaces. For example:
-
+Generate data using a simple file and default parameters.
 ```
-w_id_col    int,
-w_char_col0 char(20),
-w_char_col1 char(20),
-w_char_col2 char(20),
-w_char_col3 char(20),
-w_char_col4 char(20),
-w_char_col5 char(20),
-w_char_col6 char(20),
-w_char_col7 char(20),
-w_char_col8 char(20),
+cat samples/input1.txt | java -cp target/datagenerator-1.0-SNAPSHOT.jar com.github.zabetak.datagenerator.Generator
 ```
 
-### Command
-cat /path/to/input.txt | java -cp target/datagenerator-1.0-SNAPSHOT.jar com.github.zabetak.datagenerator.Generator 1000
+Generate data using a simple file and specifying the total number of rows to.
+```
+cat samples/input1.txt | java -cp target/datagenerator-1.0-SNAPSHOT.jar com.github.zabetak.datagenerator.Generator 10
+```
+
+Generate data using a simple file and overriding the default properties.
+```
+cat samples/input1.txt | java -cp target/datagenerator-1.0-SNAPSHOT.jar -Ddgen.string.length=2 com.github.zabetak.datagenerator.Generator
+```
+
+Generate data using a file combining standard and custom column generators.
+```
+cat samples/input2.txt | java -cp target/datagenerator-1.0-SNAPSHOT.jar com.github.zabetak.datagenerator.Generator
+```

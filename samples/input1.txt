@@ -1,0 +1,10 @@
+w_id_col    int
+w_char_col0 string
+w_char_col1 char(20)
+w_char_col2 char(20)
+w_char_col3 char(20)
+w_char_col4 char(20)
+w_char_col5 char(20)
+w_char_col6 char(20)
+w_char_col7 char(20)
+w_char_col8 char(20)
