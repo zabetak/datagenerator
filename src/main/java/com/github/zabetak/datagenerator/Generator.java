@@ -27,7 +27,8 @@ public final class Generator {
   private static final Pattern TYPE_NAME_PATTERN = Pattern.compile("[A-Z]+");
   private static final Pattern TYPE_DIGIT_PATTERN = Pattern.compile("[0-9]+");
   private static final int DEFAULT_NUM_ROWS = 100;
-  public static final int DEFAULT_STRING_LENGTH = 20;
+  public static final int DEFAULT_STRING_LENGTH =
+      Integer.parseInt(System.getProperty("dgen.string.length", "20"));
 
   private enum TypeName {
     TINYINT,
