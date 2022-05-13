@@ -29,6 +29,7 @@ public final class Generator {
   private static final int DEFAULT_NUM_ROWS = 100;
   public static final int DEFAULT_STRING_LENGTH =
       Integer.parseInt(System.getProperty("dgen.string.length", "20"));
+  public static final int GEN_CLASSNAME_POSITION = 2;
 
   private enum TypeName {
     TINYINT,
@@ -43,7 +44,8 @@ public final class Generator {
     DECIMAL,
     DOUBLE,
     FLOAT,
-    DATE
+    DATE,
+    CUSTOM
   }
 
   private Generator() {
@@ -52,7 +54,9 @@ public final class Generator {
   /**
    * @param args
    */
-  public static void main(String[] args) {
+  public static void main(String[] args)
+      throws ClassNotFoundException, InstantiationException,
+      IllegalAccessException {
     final long rows = args.length > 0 && args[0] != null ? Integer.parseInt(
         args[0]) : DEFAULT_NUM_ROWS;
     List<ColumnGenerator> colGenerators = new ArrayList<>();
@@ -103,6 +107,14 @@ public final class Generator {
           break;
         case TIMESTAMP:
           colGenerators.add(new TimestampColumnGenerator());
+          break;
+        case CUSTOM:
+          assert line.length > 2;
+          String generatorClassName = line[GEN_CLASSNAME_POSITION];
+          Class<?> genClass = Class.forName(generatorClassName);
+          ColumnGenerator<?> generator =
+              (ColumnGenerator<?>) genClass.newInstance();
+          colGenerators.add(generator);
           break;
         default:
           throw new IllegalStateException();
