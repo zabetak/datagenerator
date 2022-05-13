@@ -16,6 +16,14 @@
  */
 package com.github.zabetak.datagenerator;
 
+/**
+ * Generates data for columns of type T.
+ *
+ * @param <T> the java type of the column
+ */
 public interface ColumnGenerator<T> {
+  /**
+   * Generates a value for a specific column.
+   */
   T generate();
 }

@@ -18,8 +18,8 @@ package com.github.zabetak.datagenerator;
 
 import java.util.Random;
 
-public class IntColumnGenerator implements ColumnGenerator<Integer> {
-  
+public final class IntColumnGenerator implements ColumnGenerator<Integer> {
+
   private final Random rand = new Random();
 
   public Integer generate() {

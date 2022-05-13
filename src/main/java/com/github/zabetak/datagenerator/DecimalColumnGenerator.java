@@ -18,7 +18,8 @@ package com.github.zabetak.datagenerator;
 
 import java.math.BigDecimal;
 
-public class DecimalColumnGenerator implements ColumnGenerator<BigDecimal> {
+public final class DecimalColumnGenerator
+    implements ColumnGenerator<BigDecimal> {
 
   private final int precision;
   private final int scale;

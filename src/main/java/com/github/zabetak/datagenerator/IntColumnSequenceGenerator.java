@@ -16,7 +16,8 @@
  */
 package com.github.zabetak.datagenerator;
 
-public class IntColumnSequenceGenerator implements ColumnGenerator<Integer> {
+public final class IntColumnSequenceGenerator
+    implements ColumnGenerator<Integer> {
   private int i = 0;
 
   @Override

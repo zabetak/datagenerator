@@ -26,9 +26,22 @@ public final class Generator {
   private static final char DELIMETER = ',';
   private static final Pattern TYPE_NAME_PATTERN = Pattern.compile("[A-Z]+");
   private static final Pattern TYPE_DIGIT_PATTERN = Pattern.compile("[0-9]+");
+  private static final int DEFAULT_NUM_ROWS = 100;
+  public static final int DEFAULT_STRING_LENGTH = 20;
 
   private enum TypeName {
-    TINYINT, SMALLINT, BIGINT, INTEGER, INT, TIMESTAMP, VARCHAR, CHAR, DECIMAL, DOUBLE, FLOAT, DATE
+    TINYINT,
+    SMALLINT,
+    BIGINT,
+    INTEGER,
+    INT,
+    TIMESTAMP,
+    VARCHAR,
+    CHAR,
+    DECIMAL,
+    DOUBLE,
+    FLOAT,
+    DATE
   }
 
   private Generator() {
@@ -38,7 +51,8 @@ public final class Generator {
    * @param args
    */
   public static void main(String[] args) {
-    final long rows = args.length > 0 && args[0] != null ? Integer.parseInt(args[0]) : 100;
+    final long rows = args.length > 0 && args[0] != null ? Integer.parseInt(
+        args[0]) : DEFAULT_NUM_ROWS;
     List<ColumnGenerator> colGenerators = new ArrayList<>();
     try (Scanner in = new Scanner(System.in)) {
       while (in.hasNextLine()) {
@@ -61,22 +75,24 @@ public final class Generator {
         case BIGINT:
         case TINYINT:
         case SMALLINT:
-          if(name.toLowerCase().contains("id")) {
+          if (name.toLowerCase().contains("id")) {
             colGenerators.add(new IntColumnSequenceGenerator());
           } else {
             colGenerators.add(new IntColumnGenerator());
           }
           break;
         case DECIMAL:
-          colGenerators
-              .add(new DecimalColumnGenerator(Integer.parseInt(digits.get(0)), Integer.parseInt(digits.get(1))));
+          colGenerators.add(
+              new DecimalColumnGenerator(Integer.parseInt(digits.get(0)),
+                  Integer.parseInt(digits.get(1))));
           break;
         case VARCHAR:
         case CHAR:
           if (digits.isEmpty()) {
-            colGenerators.add(new StringColumnGenerator(20));
+            colGenerators.add(new StringColumnGenerator(DEFAULT_STRING_LENGTH));
           } else {
-            colGenerators.add(new StringColumnGenerator(Integer.parseInt(digits.get(0))));
+            colGenerators.add(
+                new StringColumnGenerator(Integer.parseInt(digits.get(0))));
           }
           break;
         case DATE:

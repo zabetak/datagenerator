@@ -18,17 +18,18 @@ package com.github.zabetak.datagenerator;
 
 import java.util.Random;
 
-public class StringColumnGenerator implements ColumnGenerator<String> {
+public final class StringColumnGenerator implements ColumnGenerator<String> {
   private static final Random RAND = new Random();
   private final int len;
+  private static final int ENGLISH_ALPHABET_CHARS_NUM = 26;
 
-  public StringColumnGenerator(int len) {
-    this.len = len;
+  public StringColumnGenerator(int length) {
+    this.len = length;
   }
 
   public String generate() {
     StringBuilder sb = new StringBuilder();
-    char c = (char) ('a' + RAND.nextInt(20));
+    char c = (char) ('a' + RAND.nextInt(ENGLISH_ALPHABET_CHARS_NUM));
     for (int i = 0; i < len; i++) {
       sb.append(c);
     }

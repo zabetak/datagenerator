@@ -18,7 +18,11 @@ package com.github.zabetak.datagenerator;
 
 import java.time.LocalDateTime;
 
-public class TimestampColumnGenerator implements ColumnGenerator<LocalDateTime> {
+/**
+ * Generates data for columns of type timestamp.
+ */
+public final class TimestampColumnGenerator
+    implements ColumnGenerator<LocalDateTime> {
   public LocalDateTime generate() {
     return LocalDateTime.now();
   }

@@ -18,8 +18,8 @@ package com.github.zabetak.datagenerator;
 
 import java.time.LocalDate;
 
-public class DateColumnGenerator implements ColumnGenerator<LocalDate> {
-  
+public final class DateColumnGenerator implements ColumnGenerator<LocalDate> {
+
   public LocalDate generate() {
     return LocalDate.now();
   }
