@@ -36,6 +36,7 @@ public final class Generator {
     INTEGER,
     INT,
     TIMESTAMP,
+    STRING,
     VARCHAR,
     CHAR,
     DECIMAL,
@@ -86,6 +87,7 @@ public final class Generator {
               new DecimalColumnGenerator(Integer.parseInt(digits.get(0)),
                   Integer.parseInt(digits.get(1))));
           break;
+        case STRING:
         case VARCHAR:
         case CHAR:
           if (digits.isEmpty()) {
