@@ -117,7 +117,7 @@ public final class Generator {
           colGenerators.add(generator);
           break;
         default:
-          throw new IllegalStateException();
+          throw new IllegalStateException("Unsupported type " + typeName);
         }
       }
     }
