@@ -45,6 +45,7 @@ public final class Generator {
     DOUBLE,
     FLOAT,
     DATE,
+    BOOLEAN,
     CUSTOM
   }
 
@@ -87,6 +88,12 @@ public final class Generator {
             colGenerators.add(new IntColumnGenerator());
           }
           break;
+        case DOUBLE:
+          colGenerators.add(new DoubleColumnGenerator());
+          break;
+        case FLOAT:
+          colGenerators.add(new FloatColumnGenerator());
+          break;
         case DECIMAL:
           colGenerators.add(
               new DecimalColumnGenerator(Integer.parseInt(digits.get(0)),
@@ -107,6 +114,9 @@ public final class Generator {
           break;
         case TIMESTAMP:
           colGenerators.add(new TimestampColumnGenerator());
+          break;
+        case BOOLEAN:
+          colGenerators.add(new BooleanColumnGenerator());
           break;
         case CUSTOM:
           assert line.length > 2;
