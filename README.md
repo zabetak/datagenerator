@@ -56,3 +56,27 @@ PHYSICS
 MATH
 MATH
 ```
+
+## [FixedDigitColumnGenerator](src/main/java/com/github/zabetak/datagenerator/FixedDigitColumnGenerator)
+
+#### Config file
+```
+postal_code custom com.github.zabetak.datagenerator.FixedDigitColumnGenerator 3 PO_78 _FR
+```
+#### Command
+```
+ cat samples/input4.txt | java -cp target/datagenerator-1.0-SNAPSHOT.jar com.github.zabetak.datagenerator.Generator 10
+```
+#### Output
+```
+PO_78232_FR
+PO_78156_FR
+PO_78584_FR
+PO_78470_FR
+PO_78523_FR
+PO_78149_FR
+PO_78129_FR
+PO_78479_FR
+PO_78716_FR
+PO_78740_FR
+```

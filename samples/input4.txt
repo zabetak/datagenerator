@@ -1,0 +1,1 @@
+postal_code custom com.github.zabetak.datagenerator.FixedDigitColumnGenerator 3 PO_78 _FR
