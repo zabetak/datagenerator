@@ -16,27 +16,24 @@
  */
 package com.github.zabetak.datagenerator;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
- * Generates data for columns of type T.
- *
- * @param <T> the java type of the column
+ * Generates data by randomly selecting values from an enumerated list.
  */
-public interface ColumnGenerator<T> {
-  /**
-   * Generates a value for a specific column.
-   */
-  T generate();
+public final class EnumColumnGenerator implements ColumnGenerator<String> {
+  private final Random rand = new Random();
+  private final List<String> values = new ArrayList<>();
 
-  /**
-   * Setups the generator by using the specified arguments.
-   *
-   * The method is called before any call is made to the {@link #generate()}
-   * method.
-   *
-   * @param arguments the list of arguments to setup the generator.
-   */
-  default void setup(List<String> arguments) {
+  @Override
+  public void setup(List<String> arguments) {
+    values.addAll(arguments);
+  }
+
+  @Override
+  public String generate() {
+    return values.get(rand.nextInt(values.size()));
   }
 }

@@ -124,6 +124,11 @@ public final class Generator {
           Class<?> genClass = Class.forName(generatorClassName);
           ColumnGenerator<?> generator =
               (ColumnGenerator<?>) genClass.newInstance();
+          List<String> arguments = new ArrayList<>();
+          for (int i = GEN_CLASSNAME_POSITION + 1; i < line.length; i++) {
+            arguments.add(line[i]);
+          }
+          generator.setup(arguments);
           colGenerators.add(generator);
           break;
         default:

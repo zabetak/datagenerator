@@ -1,0 +1,1 @@
+department custom com.github.zabetak.datagenerator.EnumColumnGenerator COMPUTER_SCIENCE MATH PHYSICS LITERATURE
