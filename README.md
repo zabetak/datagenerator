@@ -80,3 +80,53 @@ PO_78479_FR
 PO_78716_FR
 PO_78740_FR
 ```
+
+## [SkewedIntColumnGenerator](src/main/java/com/github/zabetak/datagenerator/SkewedIntColumnGenerator)
+
+### Example with custom weights
+
+#### Config file
+```
+integers custom com.github.zabetak.datagenerator.SkewedIntColumnGenerator 4 0.9 0.05 0.03 0.02
+```
+#### Command
+```
+ cat samples/input5.txt | java -cp target/datagenerator-1.0-SNAPSHOT.jar com.github.zabetak.datagenerator.Generator 10
+```
+#### Output
+```
+3232
+3232
+3232
+2584
+3232
+3232
+3232
+2584
+3232
+3232
+```
+
+### Example with default weights [0.8 0.1 0.05 0.03 0.02]
+
+#### Config file
+```
+integers custom com.github.zabetak.datagenerator.SkewedIntColumnGenerator 4
+```
+#### Command
+```
+ cat samples/input5.txt | java -cp target/datagenerator-1.0-SNAPSHOT.jar com.github.zabetak.datagenerator.Generator 10
+```
+#### Output
+```
+3232
+3232
+3232
+3232
+8156
+3232
+3232
+3232
+3232
+3232
+```

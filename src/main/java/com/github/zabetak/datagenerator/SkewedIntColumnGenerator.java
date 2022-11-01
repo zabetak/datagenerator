@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 
 /**
  * Generates a column of Integers with skewed probabilities, which
- * can be passed through arguments.
+ * can be passed through arguments. By default, this generates 5 Ints with the following weights
+ * [0.8, 0.1, 0.05, 0.03, 0.02].
  */
 public class SkewedIntColumnGenerator implements ColumnGenerator<String> {
 
@@ -19,29 +20,17 @@ public class SkewedIntColumnGenerator implements ColumnGenerator<String> {
 
   private final Random rand = new Random(31);
 
-  // By default, this generates 5 Ints with the following weights
-  // [0.8, 0.1, 0.05, 0.03, 0.02]. Variable weights is cumulative
-  private List<Double> weights = Arrays.asList(0.8, 0.9, 0.95, 0.98, 1.00);
+  // weights is cumulative
+  private static List<Double> weights = Arrays.asList(0.8, 0.9, 0.95, 0.98, 1.00);
 
-  private List<Integer> items;
+  private static List<Integer> items;
 
-  /**
-   * Generates a value for a specific column.
-   */
   @Override
   public String generate() {
     int result = items.get(findIndex(rand.nextDouble()));
     return String.valueOf(result);
   }
 
-  /**
-   * Setups the generator by using the specified arguments.
-   * <p>
-   * The method is called before any call is made to the {@link #generate()}
-   * method.
-   *
-   * @param arguments the list of arguments to setup the generator.
-   */
   @Override
   public void setup(List<String> arguments) {
     assert arguments.size() >= 1: "Supported arguments DIGIT_LEN [p1 p2 p3 ...]";
@@ -55,8 +44,6 @@ public class SkewedIntColumnGenerator implements ColumnGenerator<String> {
     for (int i = 0; i < weights.size(); i++) {
       items.add(i, rand.nextInt(POWERS_OF_10[digitLen]));
     }
-    System.out.println("Items: " + Arrays.toString(items.toArray()));
-    System.out.println("Weights: " + Arrays.toString(weights.toArray()));
   }
 
   /**
@@ -64,7 +51,7 @@ public class SkewedIntColumnGenerator implements ColumnGenerator<String> {
    * @param arguments List of weights in String
    * @return Same weights in Double
    */
-  private List<Double> convertToDouble(List<String> arguments) {
+  private static List<Double> convertToDouble(List<String> arguments) {
     return arguments.stream()
       .map(Double::parseDouble)
       .collect(Collectors.toList());
@@ -75,7 +62,7 @@ public class SkewedIntColumnGenerator implements ColumnGenerator<String> {
    * @param weights List of weights in Doubles
    * @return Normalized List of Doubles
    */
-  private List<Double> normalize(List<Double> weights) {
+  private static List<Double> normalize(List<Double> weights) {
     double sum = weights.stream().mapToDouble(d -> d).sum();
     return weights.stream().map(d -> d / sum).collect(Collectors.toList());
   }
@@ -85,7 +72,7 @@ public class SkewedIntColumnGenerator implements ColumnGenerator<String> {
    * @param weights List of Normalized weights
    * @return List with cumulative values
    */
-  private List<Double> cumulative(List<Double> weights) { // [0.05, 0.03, 0.02, 0.9]
+  private static List<Double> cumulative(List<Double> weights) { // [0.05, 0.03, 0.02, 0.9]
     List<Double> result = new ArrayList<>(weights.size());
     weights.sort(Collections.reverseOrder());   // [0.9, 0.05, 0.03, 0.02]
     result.add(weights.get(0));
@@ -99,20 +86,20 @@ public class SkewedIntColumnGenerator implements ColumnGenerator<String> {
 
   /**
    * Probes a list of cumulative values linearly, to find the index of random value p.
-   *
+   *<pre>
    * idx | value  |  range
    * =========================
    *  0  |  0.90  |  (0.00, 0.90]
    *  1  |  0.95  |  (0.90, 0.95]
    *  2  |  0.98  |  (0.95, 0.98]
    *  3  |  1.00  |  (0.98, 1.00]
-   *
+   *</pre>
    * If p = 0.92, idx = 1, as p lies in (0.90, 0.95]
    *
    * @param p Random double value between 0 and 1
    * @return index of the range which contains p
    */
-  private int findIndex(double p) {
+  private static int findIndex(double p) {
     for (int i = 0; i < weights.size(); i++) {
       if (p <= weights.get(i)) {
         return i;
