@@ -60,7 +60,7 @@ public class SkewedIntColumnGenerator implements ColumnGenerator<String> {
   }
 
   /**
-   * Normalizes a List of Doubles so that they sum up to 1.0
+   * Normalizes a List of Doubles so that they sum up to {@code 1.0}.
    * @param weights List of weights in Doubles
    * @return Normalized List of Doubles
    */
