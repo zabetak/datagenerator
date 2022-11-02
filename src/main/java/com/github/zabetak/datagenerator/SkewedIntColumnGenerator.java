@@ -20,10 +20,9 @@ public final class SkewedIntColumnGenerator implements ColumnGenerator<String> {
 
   private final Random rand = new Random(31);
 
-  private static List<Double> weights =
-      Arrays.asList(0.8, 0.9, 0.95, 0.98, 1.00);
+  private List<Double> weights = Arrays.asList(0.8, 0.9, 0.95, 0.98, 1.00);
 
-  private static List<Integer> items;
+  private List<Integer> items;
 
   @Override
   public String generate() {
@@ -105,7 +104,7 @@ public final class SkewedIntColumnGenerator implements ColumnGenerator<String> {
    * @param p Random double value between 0 and 1
    * @return index of the range which contains p
    */
-  private static int findIndex(double p) {
+  private int findIndex(double p) {
     for (int i = 0; i < weights.size(); i++) {
       if (p <= weights.get(i)) {
         return i;
