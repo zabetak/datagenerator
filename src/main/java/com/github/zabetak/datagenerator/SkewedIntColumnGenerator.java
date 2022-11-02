@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 /**
  * Generates a column of Integers with skewed probabilities, which
- * can be passed through arguments. By default, this generates 5 Ints with the following weights
- * [0.8, 0.1, 0.05, 0.03, 0.02].
+ * can be passed through arguments. By default, this generates 5 Ints with the
+ * following weights [0.8, 0.1, 0.05, 0.03, 0.02].
  */
 public class SkewedIntColumnGenerator implements ColumnGenerator<String> {
 
@@ -20,8 +20,8 @@ public class SkewedIntColumnGenerator implements ColumnGenerator<String> {
 
   private final Random rand = new Random(31);
 
-  // weights is cumulative
-  private static List<Double> weights = Arrays.asList(0.8, 0.9, 0.95, 0.98, 1.00);
+  private static List<Double> weights =
+      Arrays.asList(0.8, 0.9, 0.95, 0.98, 1.00);
 
   private static List<Integer> items;
 
@@ -33,11 +33,13 @@ public class SkewedIntColumnGenerator implements ColumnGenerator<String> {
 
   @Override
   public void setup(List<String> arguments) {
-    assert arguments.size() >= 1: "Supported arguments DIGIT_LEN [p1 p2 p3 ...]";
+    assert
+        arguments.size() >= 1 : "Supported arguments DIGIT_LEN [p1 p2 p3 ...]";
     int digitLen = Integer.parseInt(arguments.get(0));
 
     if (arguments.size() > 1) {
-      weights = cumulative(normalize(convertToDouble(arguments.subList(1, arguments.size()))));
+      weights = cumulative(
+          normalize(convertToDouble(arguments.subList(1, arguments.size()))));
     }
     items = new ArrayList<>(weights.size());
 
@@ -68,24 +70,28 @@ public class SkewedIntColumnGenerator implements ColumnGenerator<String> {
   }
 
   /**
-   * Sorts a List of normalized weights, and generates a cumulative List of weights.
+   * Sorts a List of normalized weights, and generates a cumulative List of
+   * weights.
+   * <pre>
+   * Input: [0.05, 0.03, 0.02, 0.9]
+   * Output: [0.9, 0.95, 0.98, 1.0]
+   * </pre>
    * @param weights List of Normalized weights
    * @return List with cumulative values
    */
-  private static List<Double> cumulative(List<Double> weights) { // [0.05, 0.03, 0.02, 0.9]
+  private static List<Double> cumulative(List<Double> weights) {
     List<Double> result = new ArrayList<>(weights.size());
-    weights.sort(Collections.reverseOrder());   // [0.9, 0.05, 0.03, 0.02]
+    weights.sort(Collections.reverseOrder());
     result.add(weights.get(0));
-
     for (int i = 1; i < weights.size(); i++) {
       result.add(i, result.get(i - 1) + weights.get(i));
     }
-
-    return result;    // [0.9, 0.95, 0.98, 1.0]
+    return result;
   }
 
   /**
-   * Probes a list of cumulative values linearly, to find the index of random value p.
+   * Probes a list of cumulative values linearly, to find the index of random
+   * value p.
    *<pre>
    * idx | value  |  range
    * =========================
