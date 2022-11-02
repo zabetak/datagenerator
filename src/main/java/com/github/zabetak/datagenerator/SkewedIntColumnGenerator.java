@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * can be passed through arguments. By default, this generates 5 Ints with the
  * following weights [0.8, 0.1, 0.05, 0.03, 0.02].
  */
-public class SkewedIntColumnGenerator implements ColumnGenerator<String> {
+public final class SkewedIntColumnGenerator implements ColumnGenerator<String> {
 
   private static final int[] POWERS_OF_10 =
     { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000,
